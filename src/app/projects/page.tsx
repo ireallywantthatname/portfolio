@@ -1,8 +1,9 @@
+import { OpenProjectChatButton } from "@/components/project-chat";
 import { ProjectCard } from "@/components/project-card";
 import { getPinnedRepos } from "@/lib/github";
 import { getScreenshotUrl } from "@/lib/microlink";
 import { site } from "@/lib/site";
-import { pageWrap, panel, panelSoft } from "@/lib/styles";
+import { btnSecondary, pageWrap, panel, panelSoft } from "@/lib/styles";
 
 export const revalidate = 28800;
 
@@ -25,6 +26,9 @@ export default async function ProjectsPage() {
           <p className="mt-2 max-w-[36rem] text-[15px] leading-relaxed text-foreground/85">
             Pinned repositories from GitHub.
           </p>
+          <div className="mt-4">
+            <OpenProjectChatButton className={btnSecondary} />
+          </div>
         </header>
 
         <div className="flex flex-1 flex-col gap-5 pb-2">
