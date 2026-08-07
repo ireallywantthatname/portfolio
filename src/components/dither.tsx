@@ -214,7 +214,11 @@ function DitheredWaves({
     const dpr = gl.getPixelRatio();
     const w = Math.floor(size.width * dpr);
     const h = Math.floor(size.height * dpr);
-    const res = waveUniformsRef.current.resolution.value;
+    const material = mesh.current?.material;
+    const res =
+      material instanceof THREE.ShaderMaterial
+        ? material.uniforms.resolution.value
+        : waveUniformsRef.current.resolution.value;
     if (res.x !== w || res.y !== h) {
       res.set(w, h);
     }
@@ -238,7 +242,9 @@ function DitheredWaves({
 
   const prevColor = useRef([...waveColor]);
   useFrame(({ clock }) => {
-    const u = waveUniformsRef.current;
+    const material = mesh.current?.material;
+    if (!(material instanceof THREE.ShaderMaterial)) return;
+    const u = material.uniforms;
 
     if (!disableAnimation) {
       u.time.value = clock.getElapsedTime();
@@ -309,6 +315,7 @@ export default function Dither({
       className="relative h-full w-full"
       camera={{ position: [0, 0, 6] }}
       dpr={1}
+      frameloop="always"
       gl={{ antialias: true, preserveDrawingBuffer: true }}
     >
       <DitheredWaves
