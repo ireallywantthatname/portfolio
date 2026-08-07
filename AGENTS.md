@@ -1,3 +1,9 @@
+- this is my personal portfolio.
+- don't add any comments in the codebase.
+- keep the codebase minimal and simple.
+- always follow the next.js way of doing things (e.g. <img> instead of <Image>).
+- always use bun.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know
