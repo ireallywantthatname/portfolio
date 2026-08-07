@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="A">
+  <rect width="32" height="32" fill="#ffffff"/>
+  <g transform="translate(6 30) scale(0.04 -0.04)">
+    <path
+      fill="#000000"
+      d="M500 0H300V300H200V0H0V600H100V700H400V600H500ZM300 400V600H200V400Z"
+    />
+  </g>
+</svg>
