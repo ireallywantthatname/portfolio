@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { DitherBackground } from "@/components/dither-background";
 import { SiteShell } from "@/components/site-shell";
 import { ThemeProvider } from "@/components/theme-provider";
 import { site } from "@/lib/site";
@@ -16,6 +17,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
+          <DitherBackground />
           <SiteShell>{children}</SiteShell>
         </ThemeProvider>
       </body>

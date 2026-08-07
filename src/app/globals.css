@@ -127,20 +127,17 @@
 
 @layer base {
   body {
-    @apply bg-background font-base text-foreground antialiased;
+    @apply font-base text-foreground antialiased;
     min-height: 100dvh;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #0a0612;
   }
 
   body {
     @apply selection:bg-foreground selection:text-background;
-  }
-
-  .dark body {
-    background-color: #212121;
   }
 
   h1,
