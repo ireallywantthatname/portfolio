@@ -32,11 +32,6 @@ export const site = {
       icon: "next" as const,
     },
     {
-      name: "Elysia.js",
-      href: "https://elysiajs.com",
-      icon: "elysia" as const,
-    },
-    {
       name: "shadcn",
       href: "https://ui.shadcn.com",
       icon: "shadcn" as const,
