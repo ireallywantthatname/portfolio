@@ -22,15 +22,18 @@
 }
 
 :root {
-  --background: oklch(93.88% 0.033 300.19);
-  --secondary-background: oklch(100% 0 0);
-  --foreground: oklch(0% 0 0);
-  --main-foreground: oklch(0% 0 0);
-  --main: oklch(70.28% 0.1753 295.36);
-  --border: oklch(0% 0 0);
-  --ring: oklch(0% 0 0);
-  --overlay: oklch(0% 0 0 / 0.8);
+  --background: oklch(93.5% 0.028 300);
+  --secondary-background: oklch(99% 0.005 300);
+  --foreground: oklch(18% 0.02 296);
+  --main-foreground: oklch(18% 0.02 296);
+  --main: oklch(68% 0.14 295);
+  --border: oklch(18% 0.025 296);
+  --ring: oklch(18% 0.025 296);
+  --overlay: oklch(18% 0.025 296 / 0.8);
   --shadow: 4px 4px 0px 0px var(--border);
+  --shadow-hover: 7px 7px 0px 0px var(--border);
+  --shadow-active: 2px 2px 0px 0px var(--border);
+  --void: oklch(12% 0.04 296);
   --chart-1: #a985ff;
   --chart-2: #00d696;
   --chart-3: #facc00;
@@ -39,21 +42,24 @@
   --chart-active-dot: #000;
   --card: var(--secondary-background);
   --card-foreground: var(--foreground);
-  --muted: oklch(96% 0.01 300);
-  --muted-foreground: oklch(40% 0 0);
-  --sb-track-color: #ffffff;
-  --sb-thumb-color: #000000;
+  --muted: oklch(96% 0.012 300);
+  --muted-foreground: oklch(42% 0.02 296);
+  --sb-track-color: oklch(99% 0.005 300);
+  --sb-thumb-color: oklch(18% 0.025 296);
 }
 
 .dark {
-  --background: oklch(30.14% 0.0826 296.5);
-  --secondary-background: oklch(23.93% 0 0);
-  --foreground: oklch(92.49% 0 0);
-  --main-foreground: oklch(0% 0 0);
-  --main: oklch(70.28% 0.1753 295.36);
-  --border: oklch(0% 0 0);
-  --ring: oklch(100% 0 0);
+  --background: oklch(28% 0.06 296);
+  --secondary-background: oklch(22% 0.02 296);
+  --foreground: oklch(93% 0.01 300);
+  --main-foreground: oklch(18% 0.02 296);
+  --main: oklch(68% 0.14 295);
+  --border: oklch(12% 0.03 296);
+  --ring: oklch(93% 0.01 300);
   --shadow: 4px 4px 0px 0px var(--border);
+  --shadow-hover: 7px 7px 0px 0px var(--border);
+  --shadow-active: 2px 2px 0px 0px var(--border);
+  --void: oklch(10% 0.035 296);
   --chart-1: #a985ff;
   --chart-2: #00bd84;
   --chart-3: #e0b700;
@@ -62,10 +68,10 @@
   --chart-active-dot: #fff;
   --card: var(--secondary-background);
   --card-foreground: var(--foreground);
-  --muted: oklch(28% 0.04 296);
-  --muted-foreground: oklch(70% 0 0);
-  --sb-track-color: #212121;
-  --sb-thumb-color: #eeefe9;
+  --muted: oklch(26% 0.04 296);
+  --muted-foreground: oklch(72% 0.02 300);
+  --sb-track-color: oklch(18% 0.02 296);
+  --sb-thumb-color: oklch(90% 0.01 100);
 }
 
 @theme inline {
@@ -77,6 +83,7 @@
   --color-border: var(--border);
   --color-overlay: var(--overlay);
   --color-ring: var(--ring);
+  --color-void: var(--void);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -93,6 +100,8 @@
   --spacing-reverseBoxShadowY: -4px;
   --radius-base: 5px;
   --shadow-shadow: var(--shadow);
+  --shadow-lift: 7px 7px 0px 0px var(--border);
+  --shadow-press: 2px 2px 0px 0px var(--border);
   --font-weight-base: 500;
   --font-weight-heading: 700;
   --font-pixel: "PixelMplus", ui-sans-serif, system-ui, sans-serif;
@@ -125,6 +134,21 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-marquee,
+  .animate-marquee2 {
+    animation: none !important;
+  }
+}
+
 @layer base {
   body {
     @apply font-base text-foreground antialiased;
@@ -133,7 +157,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #0a0612;
+    background-color: var(--void);
   }
 
   body {
@@ -147,6 +171,16 @@
   h5,
   h6 {
     @apply font-heading;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 2px;
   }
 }
 

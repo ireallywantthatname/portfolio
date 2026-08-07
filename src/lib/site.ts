@@ -1,6 +1,6 @@
 export const site = {
   name: "Akash De Silva",
-  description: "Typescript developer. Likes Linux.",
+  description: "TypeScript developer. Likes Linux.",
   location: "NSBM Green University",
   email: "irwtn@protonmail.com",
   github: "https://github.com/ireallywantthatname",

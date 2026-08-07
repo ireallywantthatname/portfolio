@@ -18,5 +18,5 @@ export function TechIcon({
   className?: string;
 }) {
   const Icon = iconMap[name];
-  return <Icon className={className} title="" />;
+  return <Icon className={className} title={name} />;
 }
