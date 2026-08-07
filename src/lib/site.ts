@@ -36,6 +36,11 @@ export const site = {
       href: "https://ui.shadcn.com",
       icon: "shadcn" as const,
     },
+    {
+      name: "GROQ",
+      href: "https://groq.com",
+      icon: "groq" as const,
+    },
   ],
 } as const;
 
