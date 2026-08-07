@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Marquee } from "@/components/marquee";
+import { OpenProjectChatButton } from "@/components/project-chat";
 import { TechIcon } from "@/components/tech-icon";
 import { site } from "@/lib/site";
 import {
@@ -53,6 +54,7 @@ export default function HomePage() {
               <Link href="/resume" className={btnPrimary}>
                 View resume
               </Link>
+              <OpenProjectChatButton className={btnSecondary} />
               <a href={`mailto:${site.email}`} className={btnSecondary}>
                 Start a project
               </a>

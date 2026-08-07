@@ -1,4 +1,8 @@
 import { Header } from "@/components/header";
+import {
+  ProjectChatProvider,
+  ProjectChatWindow,
+} from "@/components/project-chat";
 import { site } from "@/lib/site";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
@@ -9,18 +13,21 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           {site.name}
         </p>
       </header>
-      <div className="relative flex h-[90dvh] max-h-[100dvh] flex-col rounded-br-base rounded-tr-base bg-background portrait:h-[100dvh] portrait:max-h-[100dvh] portrait:w-[100dvw] portrait:max-w-[100dvw] portrait:rounded-none">
-        <div className="font-semibold">
-          <Header />
+      <ProjectChatProvider>
+        <div className="relative flex h-[90dvh] max-h-[100dvh] flex-col overflow-hidden rounded-br-base rounded-tr-base bg-background portrait:h-[100dvh] portrait:max-h-[100dvh] portrait:w-[100dvw] portrait:max-w-[100dvw] portrait:rounded-none">
+          <div className="font-semibold">
+            <Header />
+          </div>
+          <main
+            id="main"
+            className="main h-full max-h-[calc(90dvh-50px)] overflow-y-auto portrait:max-h-[calc(100dvh-50px)]"
+            tabIndex={-1}
+          >
+            {children}
+          </main>
+          <ProjectChatWindow />
         </div>
-        <main
-          id="main"
-          className="main h-full max-h-[calc(90dvh-50px)] overflow-y-auto portrait:max-h-[calc(100dvh-50px)]"
-          tabIndex={-1}
-        >
-          {children}
-        </main>
-      </div>
+      </ProjectChatProvider>
     </div>
   );
 }
