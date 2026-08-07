@@ -16,6 +16,7 @@ import {
   SiSwift,
   SiTypescript,
 } from "@icons-pack/react-simple-icons";
+import Image from "next/image";
 import type { ComponentType } from "react";
 
 import type { PinnedRepo } from "@/lib/github";
@@ -63,12 +64,29 @@ function LanguageLogo({
   );
 }
 
-export function ProjectCard({ repo }: { repo: PinnedRepo }) {
+export function ProjectCard({
+  repo,
+  screenshotUrl,
+}: {
+  repo: PinnedRepo;
+  screenshotUrl?: string | null;
+}) {
   const hasLive = Boolean(repo.homepageUrl);
 
   return (
-    <article className={cn(panel, "relative p-5 md:p-4")}>
+    <article className={cn(panel, "relative overflow-hidden p-5 md:p-4")}>
       <div className="space-y-4">
+        {screenshotUrl ? (
+          <div className="relative aspect-video w-full overflow-hidden rounded-base border-2 border-border bg-background">
+            <Image
+              src={screenshotUrl}
+              alt={`Homepage screenshot of ${repo.name}`}
+              fill
+              className="object-cover object-top"
+              sizes="(max-width: 800px) 100vw, 760px"
+            />
+          </div>
+        ) : null}
         <div className="space-y-3">
           <h2 className="text-[22px] font-bold leading-tight tracking-tight max-[500px]:text-[18px]">
             {repo.name}

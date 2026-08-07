@@ -1,8 +1,19 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactCompiler: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.microlink.io",
+      },
+      {
+        protocol: "https",
+        hostname: "microlink-cdn.s3.amazonaws.com",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

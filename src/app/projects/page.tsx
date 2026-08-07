@@ -1,10 +1,19 @@
 import { ProjectCard } from "@/components/project-card";
 import { getPinnedRepos } from "@/lib/github";
+import { getScreenshotUrl } from "@/lib/microlink";
 import { site } from "@/lib/site";
 import { pageWrap, panel, panelSoft } from "@/lib/styles";
 
+export const revalidate = 28800;
+
 export default async function ProjectsPage() {
   const { repos, error } = await getPinnedRepos(site.githubUser);
+
+  const screenshots = await Promise.all(
+    repos.map((repo) =>
+      getScreenshotUrl(repo.homepageUrl ?? repo.url),
+    ),
+  );
 
   return (
     <div className="flex h-full flex-col bg-background text-foreground">
@@ -31,8 +40,12 @@ export default async function ProjectsPage() {
             </p>
           ) : null}
 
-          {repos.map((repo) => (
-            <ProjectCard key={repo.url} repo={repo} />
+          {repos.map((repo, i) => (
+            <ProjectCard
+              key={repo.url}
+              repo={repo}
+              screenshotUrl={screenshots[i]}
+            />
           ))}
         </div>
       </div>
