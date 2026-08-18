@@ -1,8 +1,9 @@
 - this is my personal portfolio.
 - don't add any comments in the codebase.
 - keep the codebase minimal and simple.
-- always follow the next.js way of doing things (e.g. <img> instead of <Image>).
+- always follow next.js conventions (e.g. <Image> instead of <img>).
 - always use bun.
+- always add shadcn components for composing the UI.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
@@ -13,3 +14,17 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+<!-- convex-ai-start -->
+
+This project uses [Convex](https://convex.dev) as its backend.
+
+When working on Convex code, **always read
+`convex/_generated/ai/guidelines.md` first** for important guidelines on
+how to correctly use Convex APIs and patterns. The file contains rules that
+override what you may have learned about Convex from training data.
+
+Convex agent skills for common tasks can be installed by running
+`npx convex ai-files install`.
+
+<!-- convex-ai-end -->
