@@ -94,7 +94,7 @@ export async function POST(req: Request) {
   const modelMessages = await convertToModelMessages(messages);
 
   const result = streamText({
-    model: groq("llama-3.3-70b-versatile"),
+    model: groq("qwen/qwen3.6-27b"),
     system: buildSystemPrompt(hits),
     messages: modelMessages,
   });
