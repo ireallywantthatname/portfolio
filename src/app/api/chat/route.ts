@@ -97,7 +97,12 @@ export async function POST(req: Request) {
     model: groq("qwen/qwen3.6-27b"),
     system: buildSystemPrompt(hits),
     messages: modelMessages,
+    providerOptions: {
+      groq: {
+        reasoningFormat: "hidden",
+      },
+    },
   });
 
-  return result.toUIMessageStreamResponse();
+  return result.toUIMessageStreamResponse({ sendReasoning: false });
 }
