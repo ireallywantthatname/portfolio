@@ -3,7 +3,7 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { EffectComposer, wrapEffect } from "@react-three/postprocessing";
 import { Effect } from "postprocessing";
-import { forwardRef, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
 const waveVertexShader = `
@@ -136,10 +136,16 @@ void mainImage(in vec4 inputColor, in vec2 uv, out vec4 outputColor) {
 class RetroEffectImpl extends Effect {
   uniforms: Map<string, THREE.Uniform<number>>;
 
-  constructor() {
+  constructor({
+    colorNum = 4,
+    pixelSize = 2,
+  }: {
+    colorNum?: number;
+    pixelSize?: number;
+  } = {}) {
     const uniforms = new Map<string, THREE.Uniform<number>>([
-      ["colorNum", new THREE.Uniform(4.0)],
-      ["pixelSize", new THREE.Uniform(2.0)],
+      ["colorNum", new THREE.Uniform(colorNum)],
+      ["pixelSize", new THREE.Uniform(pixelSize)],
     ]);
     super("RetroEffect", ditherFragmentShader, { uniforms });
     this.uniforms = uniforms;
@@ -163,13 +169,6 @@ class RetroEffectImpl extends Effect {
 }
 
 const WrappedRetro = wrapEffect(RetroEffectImpl);
-
-const RetroEffect = forwardRef<
-  unknown,
-  { colorNum: number; pixelSize: number }
->(function RetroEffect({ colorNum, pixelSize }, ref) {
-  return <WrappedRetro ref={ref} colorNum={colorNum} pixelSize={pixelSize} />;
-});
 
 type DitheredWavesProps = {
   waveSpeed: number;
@@ -283,7 +282,7 @@ function DitheredWaves({
       </mesh>
 
       <EffectComposer>
-        <RetroEffect colorNum={colorNum} pixelSize={pixelSize} />
+        <WrappedRetro colorNum={colorNum} pixelSize={pixelSize} />
       </EffectComposer>
     </>
   );
