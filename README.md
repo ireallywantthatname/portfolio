@@ -30,13 +30,14 @@ Pages:
 
 | Route | What it shows |
 | --- | --- |
-| `/` | Name, location, GitHub, resume CTA, stack chips |
+| `/` | Name, location, GitHub, now playing, resume CTA, stack chips |
 | `/projects` | Pinned repos, Microlink screenshots, project chat |
 | `/resume` | Embedded resume document |
 | `/contacts` | Map, email, GitHub |
 
 ## Features
 
+- **Now playing** from the Spotify Web API (current track, or last played)
 - **Pinned projects** from GitHub GraphQL, with homepage screenshots from [Microlink](https://microlink.io)
 - **Project chat** that retrieves `CONTEXT.md` chunks and streams answers through Groq (`qwen/qwen3.6-27b`)
 - **Webhook reindex** so a push that touches `CONTEXT.md` updates the Convex vector index
@@ -81,6 +82,10 @@ NEXT_PUBLIC_CONVEX_SITE_URL=
 GITHUB_TOKEN=
 GROQ_API_KEY=
 MICROLINK_API_KEY=
+SPOTIFY_CLIENT_ID=
+SPOTIFY_CLIENT_SECRET=
+SPOTIFY_REDIRECT_URI=http://127.0.0.1:3000/api/spotify/callback
+SPOTIFY_REFRESH_TOKEN=
 ```
 
 | Variable | Where | Required | Used for |
@@ -90,11 +95,23 @@ MICROLINK_API_KEY=
 | `GITHUB_TOKEN` | Next.js and Convex | yes | Pinned repos and `CONTEXT.md` |
 | `GROQ_API_KEY` | Next.js | yes | Streaming chat replies |
 | `MICROLINK_API_KEY` | Next.js | no | Project screenshots (falls back to the public API) |
+| `SPOTIFY_CLIENT_ID` | Next.js | yes for now playing | Spotify app |
+| `SPOTIFY_CLIENT_SECRET` | Next.js | yes for now playing | Spotify app |
+| `SPOTIFY_REDIRECT_URI` | Next.js | local only | One-time OAuth callback |
+| `SPOTIFY_REFRESH_TOKEN` | Next.js | yes for now playing | Server access to your player |
 | `GEMINI_API_KEY` | Convex | yes | 768-dim embeddings (`text-embedding-004`) |
 | `GITHUB_WEBHOOK_SECRET` | Convex | yes for webhook | HMAC check on GitHub push events |
 | `GITHUB_OWNER` | Convex | no | Defaults to `ireallywantthatname` |
 
 Set Convex secrets with `bunx convex env set NAME value`, or in the Convex dashboard.
+
+After the Spotify app exists, mint a refresh token once:
+
+```bash
+bun run dev
+```
+
+Open [http://127.0.0.1:3000/api/spotify/login](http://127.0.0.1:3000/api/spotify/login), approve `user-read-currently-playing` and `user-read-recently-played`, then copy `SPOTIFY_REFRESH_TOKEN` into `.env.local` and `.env.production` and restart. Login and callback return 404 in production.
 
 ## Project chat
 
