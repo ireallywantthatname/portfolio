@@ -4,9 +4,6 @@ export const panel =
 export const panelSoft =
   "rounded-base border-4 border-border bg-main/10 shadow-shadow";
 
-export const panelInset =
-  "rounded-base border-4 border-border bg-main/15 shadow-shadow";
-
 export const label =
   "text-xs font-bold uppercase tracking-[0.16em] text-foreground";
 

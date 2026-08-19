@@ -30,7 +30,7 @@ Pages:
 
 | Route | What it shows |
 | --- | --- |
-| `/` | Name, location, GitHub, now playing, resume CTA, stack chips |
+| `/` | Name, Bun and Next.js logos, location, GitHub, now playing, resume CTA |
 | `/projects` | Pinned repos, Microlink screenshots, project chat |
 | `/resume` | Embedded resume document |
 | `/contacts` | Map, email, GitHub |

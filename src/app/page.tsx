@@ -5,13 +5,11 @@ import { NowPlayingCard } from "@/components/now-playing";
 import { TechIcon } from "@/components/tech-icon";
 import { site } from "@/lib/site";
 import {
-  btnChip,
   btnPrimary,
   btnSecondary,
   label,
   pageWrap,
   panel,
-  panelInset,
   panelSoft,
 } from "@/lib/styles";
 
@@ -28,6 +26,20 @@ export default function HomePage() {
               <p className="max-w-[36rem] text-[16px] leading-relaxed tracking-normal text-foreground/90 lg:text-[15px]">
                 {site.description}
               </p>
+              <div className="flex items-center gap-3">
+                {site.builtWith.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={item.name}
+                    className="text-foreground/80 transition-[color,transform] duration-200 ease-out hover:-translate-y-0.5 hover:text-foreground focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                  >
+                    <TechIcon name={item.icon} className="size-7" />
+                  </a>
+                ))}
+              </div>
             </div>
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -59,26 +71,6 @@ export default function HomePage() {
               <a href={`mailto:${site.email}`} className={btnSecondary}>
                 Start a project
               </a>
-            </div>
-          </div>
-        </section>
-
-        <section className={`${panel} p-5 md:p-4`}>
-          <div className={`${panelInset} p-4`}>
-            <p className={label}>Built with</p>
-            <div className="mt-3 flex flex-wrap items-center gap-3 max-[500px]:gap-2">
-              {site.builtWith.map((item) => (
-                <a
-                  key={item.name}
-                  className={btnChip}
-                  href={item.href}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <TechIcon name={item.icon} className="size-7" />
-                  {item.name}
-                </a>
-              ))}
             </div>
           </div>
         </section>

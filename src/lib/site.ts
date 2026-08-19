@@ -31,16 +31,6 @@ export const site = {
       href: "https://nextjs.org",
       icon: "next" as const,
     },
-    {
-      name: "shadcn",
-      href: "https://ui.shadcn.com",
-      icon: "shadcn" as const,
-    },
-    {
-      name: "GROQ",
-      href: "https://groq.com",
-      icon: "groq" as const,
-    },
   ],
 } as const;
 
