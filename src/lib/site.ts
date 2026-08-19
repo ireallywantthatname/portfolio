@@ -13,18 +13,6 @@ export const site = {
     "https://www.google.com/maps?q=6.8213291,80.0415729&z=17&output=embed",
   mapsLink: "https://maps.app.goo.gl/UrJeyPC5aGhLVCeu7",
   marquee: ["TypeScript", "Linux", "Bun", "Next.js", "Elysia.js", "shadcn"],
-  builtWith: [
-    {
-      name: "Bun",
-      href: "https://bun.sh",
-      icon: "bun" as const,
-    },
-    {
-      name: "Next.js",
-      href: "https://nextjs.org",
-      icon: "next" as const,
-    },
-  ],
 } as const;
 
 export const navItems = [
