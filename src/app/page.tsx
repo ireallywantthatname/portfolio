@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Marquee } from "@/components/marquee";
+import { NowPlayingCard } from "@/components/now-playing";
 import { TechIcon } from "@/components/tech-icon";
 import { site } from "@/lib/site";
 import {
@@ -48,6 +49,8 @@ export default function HomePage() {
                 </a>
               </div>
             </div>
+
+            <NowPlayingCard />
 
             <div className="flex flex-wrap gap-3">
               <Link href="/resume" className={btnPrimary}>

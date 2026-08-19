@@ -12,6 +12,14 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "microlink-cdn.s3.amazonaws.com",
       },
+      {
+        protocol: "https",
+        hostname: "**.scdn.co",
+      },
+      {
+        protocol: "https",
+        hostname: "**.spotifycdn.com",
+      },
     ],
   },
 };
