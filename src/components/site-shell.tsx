@@ -1,4 +1,5 @@
 import { Header } from "@/components/header";
+import { PersistentResume } from "@/components/persistent-resume";
 import {
   ProjectChatProvider,
   ProjectChatWindow,
@@ -20,10 +21,11 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </div>
           <main
             id="main"
-            className="main h-full max-h-[calc(90dvh-50px)] overflow-y-auto portrait:max-h-[calc(100dvh-50px)]"
+            className="main relative h-full max-h-[calc(90dvh-50px)] overflow-y-auto portrait:max-h-[calc(100dvh-50px)]"
             tabIndex={-1}
           >
             {children}
+            <PersistentResume />
           </main>
           <ProjectChatWindow />
         </div>
