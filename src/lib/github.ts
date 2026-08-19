@@ -93,9 +93,8 @@ export async function getPinnedRepos(
 
     const nodes = json.data?.user?.pinnedItems?.nodes ?? [];
     const repos: PinnedRepo[] = nodes
-      .filter(
-        (node): node is NonNullable<typeof node> & { name: string } =>
-          Boolean(node && "name" in node && node.name),
+      .filter((node): node is NonNullable<typeof node> & { name: string } =>
+        Boolean(node && "name" in node && node.name),
       )
       .map((node) => ({
         name: node.name,

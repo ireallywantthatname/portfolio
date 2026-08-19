@@ -79,17 +79,16 @@ async function withModelFallback<T>(
 }
 
 export async function embedQuery(text: string): Promise<number[]> {
-  return withModelFallback((model) =>
-    embedOne(text, model, "RETRIEVAL_QUERY"),
-  );
+  return withModelFallback((model) => embedOne(text, model, "RETRIEVAL_QUERY"));
 }
 
 export async function embedDocuments(texts: string[]): Promise<number[][]> {
   if (texts.length === 0) return [];
 
   return withModelFallback(async (model) => {
-    if (texts.length === 1) {
-      return [await embedOne(texts[0]!, model, "RETRIEVAL_DOCUMENT")];
+    const [first] = texts;
+    if (texts.length === 1 && first !== undefined) {
+      return [await embedOne(first, model, "RETRIEVAL_DOCUMENT")];
     }
 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:batchEmbedContents?key=${getApiKey()}`;

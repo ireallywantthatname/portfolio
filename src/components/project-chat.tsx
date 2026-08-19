@@ -5,13 +5,13 @@ import { DefaultChatTransport, type UIMessage } from "ai";
 import { MessageCircle, Minus, Send, X } from "lucide-react";
 import {
   createContext,
+  type FormEvent,
   useCallback,
   useContext,
   useEffect,
   useMemo,
   useRef,
   useState,
-  type FormEvent,
 } from "react";
 import Draggable from "react-draggable";
 
@@ -67,7 +67,9 @@ export function ProjectChatProvider({
 
 function messageText(message: UIMessage): string {
   return message.parts
-    .filter((part): part is { type: "text"; text: string } => part.type === "text")
+    .filter(
+      (part): part is { type: "text"; text: string } => part.type === "text",
+    )
     .map((part) => part.text)
     .join("");
 }
@@ -90,8 +92,10 @@ export function ProjectChatWindow() {
   const busy = status === "submitted" || status === "streaming";
 
   useEffect(() => {
+    if (!open || minimized) return;
     const el = listRef.current;
     if (!el) return;
+    if (messages.length === 0 && status === "ready") return;
     el.scrollTop = el.scrollHeight;
   }, [messages, status, open, minimized]);
 
@@ -257,11 +261,7 @@ export function ProjectChatWindow() {
   );
 }
 
-export function OpenProjectChatButton({
-  className,
-}: {
-  className?: string;
-}) {
+export function OpenProjectChatButton({ className }: { className?: string }) {
   const { openChat, open } = useProjectChat();
   return (
     <button

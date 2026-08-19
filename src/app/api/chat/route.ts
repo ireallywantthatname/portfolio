@@ -1,9 +1,5 @@
 import { groq } from "@ai-sdk/groq";
-import {
-  convertToModelMessages,
-  streamText,
-  type UIMessage,
-} from "ai";
+import { convertToModelMessages, streamText, type UIMessage } from "ai";
 import { ConvexHttpClient } from "convex/browser";
 
 import { api } from "../../../../convex/_generated/api";
@@ -19,7 +15,9 @@ type SearchHit = {
 
 function extractText(message: UIMessage): string {
   return message.parts
-    .filter((part): part is { type: "text"; text: string } => part.type === "text")
+    .filter(
+      (part): part is { type: "text"; text: string } => part.type === "text",
+    )
     .map((part) => part.text)
     .join("")
     .trim();

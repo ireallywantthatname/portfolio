@@ -45,13 +45,7 @@ const languageIcons: Record<
   Shell: SiGnubash,
 };
 
-function LanguageLogo({
-  name,
-  color,
-}: {
-  name: string;
-  color: string | null;
-}) {
+function LanguageLogo({ name, color }: { name: string; color: string | null }) {
   const Icon = languageIcons[name];
   if (!Icon) return null;
 
@@ -71,7 +65,8 @@ export function ProjectCard({
   repo: PinnedRepo;
   screenshotUrl?: string | null;
 }) {
-  const hasLive = Boolean(repo.homepageUrl);
+  const homepageUrl = repo.homepageUrl;
+  const hasLive = Boolean(homepageUrl);
 
   return (
     <article className={cn(panel, "relative overflow-hidden p-5 md:p-4")}>
@@ -116,14 +111,12 @@ export function ProjectCard({
           <div
             className={cn(
               "grid gap-3",
-              hasLive
-                ? "grid-cols-2 max-[500px]:grid-cols-1"
-                : "grid-cols-1",
+              hasLive ? "grid-cols-2 max-[500px]:grid-cols-1" : "grid-cols-1",
             )}
           >
-            {hasLive ? (
+            {homepageUrl ? (
               <a
-                href={repo.homepageUrl!}
+                href={homepageUrl}
                 target="_blank"
                 rel="noreferrer"
                 className={btnPrimary}

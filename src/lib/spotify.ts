@@ -6,7 +6,11 @@ export type NowPlayingTrack = {
 };
 
 export type NowPlaying =
-  | ({ status: "playing"; progressMs: number; durationMs: number } & NowPlayingTrack)
+  | ({
+      status: "playing";
+      progressMs: number;
+      durationMs: number;
+    } & NowPlayingTrack)
   | ({ status: "paused" } & NowPlayingTrack)
   | ({ status: "recent" } & NowPlayingTrack)
   | { status: "idle" };
@@ -39,15 +43,18 @@ function pickImage(images: unknown): string | null {
       url: typeof image.url === "string" ? image.url : null,
       width: typeof image.width === "number" ? image.width : 0,
     }))
-    .filter((image): image is { url: string; width: number } => Boolean(image.url))
+    .filter((image): image is { url: string; width: number } =>
+      Boolean(image.url),
+    )
     .sort((a, b) => a.width - b.width);
 
   if (ranked.length === 0) {
     return null;
   }
 
-  return (ranked.find((image) => image.width >= 160) ?? ranked[ranked.length - 1])
-    .url;
+  return (
+    ranked.find((image) => image.width >= 160) ?? ranked[ranked.length - 1]
+  ).url;
 }
 
 function mapItem(item: unknown): NowPlayingTrack | null {
@@ -57,7 +64,8 @@ function mapItem(item: unknown): NowPlayingTrack | null {
 
   const title = typeof item.name === "string" ? item.name : "";
   const trackUrl =
-    isRecord(item.external_urls) && typeof item.external_urls.spotify === "string"
+    isRecord(item.external_urls) &&
+    typeof item.external_urls.spotify === "string"
       ? item.external_urls.spotify
       : "";
   if (!title || !trackUrl) {
@@ -146,11 +154,7 @@ export async function exchangeAuthorizationCode(code: string) {
 
 async function refreshAccessToken(force = false) {
   const now = Date.now();
-  if (
-    !force &&
-    cachedToken &&
-    cachedToken.expiresAt - 60_000 > now
-  ) {
+  if (!force && cachedToken && cachedToken.expiresAt - 60_000 > now) {
     return cachedToken.accessToken;
   }
 
@@ -201,9 +205,7 @@ async function spotifyGet(path: string, accessToken: string) {
   });
 }
 
-async function getRecentlyPlayed(
-  accessToken: string,
-): Promise<NowPlaying> {
+async function getRecentlyPlayed(accessToken: string): Promise<NowPlaying> {
   const res = await spotifyGet(
     "/me/player/recently-played?limit=1",
     accessToken,
@@ -213,7 +215,11 @@ async function getRecentlyPlayed(
   }
 
   const json: unknown = await res.json();
-  if (!isRecord(json) || !Array.isArray(json.items) || json.items.length === 0) {
+  if (
+    !isRecord(json) ||
+    !Array.isArray(json.items) ||
+    json.items.length === 0
+  ) {
     return idle;
   }
 

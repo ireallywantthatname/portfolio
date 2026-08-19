@@ -109,9 +109,8 @@ export async function listPinnedRepos(
 
   const nodes = json.data?.user?.pinnedItems?.nodes ?? [];
   return nodes
-    .filter(
-      (n): n is { name: string; owner: { login: string } } =>
-        Boolean(n?.name && n.owner?.login),
+    .filter((n): n is { name: string; owner: { login: string } } =>
+      Boolean(n?.name && n.owner?.login),
     )
     .map((n) => ({ owner: n.owner.login, repo: n.name }));
 }

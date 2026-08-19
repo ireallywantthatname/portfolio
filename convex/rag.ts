@@ -1,7 +1,7 @@
 import { v } from "convex/values";
 
 import { internal } from "./_generated/api";
-import { Doc } from "./_generated/dataModel";
+import type { Doc } from "./_generated/dataModel";
 import {
   action,
   internalAction,
@@ -96,11 +96,17 @@ export const reindexRepo = internalAction({
     }
 
     const embeddings = await embedDocuments(pieces);
-    const chunks = pieces.map((content, chunkIndex) => ({
-      chunkIndex,
-      content,
-      embedding: embeddings[chunkIndex]!,
-    }));
+    const chunks = pieces.map((content, chunkIndex) => {
+      const embedding = embeddings[chunkIndex];
+      if (!embedding) {
+        throw new Error("embedding count mismatch");
+      }
+      return {
+        chunkIndex,
+        content,
+        embedding,
+      };
+    });
 
     await ctx.runMutation(internal.rag.replaceRepoChunks, {
       owner: args.owner,

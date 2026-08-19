@@ -1,5 +1,5 @@
-import { OpenProjectChatButton } from "@/components/project-chat";
 import { ProjectCard } from "@/components/project-card";
+import { OpenProjectChatButton } from "@/components/project-chat";
 import { getPinnedRepos } from "@/lib/github";
 import { getScreenshotUrl } from "@/lib/microlink";
 import { site } from "@/lib/site";
@@ -11,9 +11,7 @@ export default async function ProjectsPage() {
   const { repos, error } = await getPinnedRepos(site.githubUser);
 
   const screenshots = await Promise.all(
-    repos.map((repo) =>
-      getScreenshotUrl(repo.homepageUrl ?? repo.url),
-    ),
+    repos.map((repo) => getScreenshotUrl(repo.homepageUrl ?? repo.url)),
   );
 
   return (

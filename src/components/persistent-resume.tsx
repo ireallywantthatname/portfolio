@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { site } from "@/lib/site";
 import { btnSecondary, pageWrap, panel, panelSoft } from "@/lib/styles";
@@ -35,7 +35,9 @@ export function PersistentResume() {
       aria-hidden={!active}
     >
       <div className={`${pageWrap} max-w-none`}>
-        <header className={`${panelSoft} flex flex-wrap items-center justify-between gap-3 p-5 md:p-4`}>
+        <header
+          className={`${panelSoft} flex flex-wrap items-center justify-between gap-3 p-5 md:p-4`}
+        >
           <div>
             <h1 className="text-[30px] font-bold tracking-tight max-[500px]:text-[24px]">
               Resume

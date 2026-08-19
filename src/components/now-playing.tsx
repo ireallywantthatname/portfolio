@@ -156,10 +156,7 @@ function Progress({
   return (
     <div className="mt-2 flex items-center gap-2">
       <div className="h-2 flex-1 overflow-hidden rounded-base border-2 border-border bg-background">
-        <div
-          className="h-full bg-main"
-          style={{ width: `${ratio * 100}%` }}
-        />
+        <div className="h-full bg-main" style={{ width: `${ratio * 100}%` }} />
       </div>
       <p className="shrink-0 text-[11px] tabular-nums tracking-[0.06em] text-muted-foreground">
         {formatMs(progressMs)} / {formatMs(durationMs)}
@@ -176,12 +173,7 @@ export function NowPlayingCard() {
   const track = data && isTrack(data) ? data : null;
 
   const body = (
-    <Card
-      className={cn(
-        panel,
-        "gap-0 rounded-base py-0 ring-0",
-      )}
-    >
+    <Card className={cn(panel, "gap-0 rounded-base py-0 ring-0")}>
       <CardContent className="p-4">
         <div className="flex items-center justify-between gap-3">
           <p className={label}>
