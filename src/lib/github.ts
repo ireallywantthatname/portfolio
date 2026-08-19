@@ -65,7 +65,9 @@ export async function getPinnedRepos(
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
-        Accept: "application/json",
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+        "User-Agent": "portfolio",
       },
       body: JSON.stringify({
         query: PINNED_QUERY,
