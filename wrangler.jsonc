@@ -42,7 +42,11 @@
   },
   "routes": [
     {
-      "pattern": "akashdesilva.space",
+      "pattern": "akashdesilva.dev",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.akashdesilva.dev",
       "custom_domain": true
     }
   ]
