@@ -1,3 +1,10 @@
+import { site } from "@/lib/site";
+
+export type GitHubProfile = {
+  name: string;
+  bio: string;
+};
+
 export type PinnedRepo = {
   name: string;
   description: string | null;
@@ -111,5 +118,46 @@ export async function getPinnedRepos(
       repos: [],
       error: err instanceof Error ? err.message : "Failed to fetch pins",
     };
+  }
+}
+
+export async function getGitHubProfile(
+  login: string = site.githubUser,
+): Promise<GitHubProfile> {
+  const token = process.env.GITHUB_TOKEN;
+  const headers: Record<string, string> = {
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+    "User-Agent": "portfolio",
+  };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  try {
+    const res = await fetch(
+      `https://api.github.com/users/${encodeURIComponent(login)}`,
+      {
+        headers,
+        next: { revalidate: 3600 },
+      },
+    );
+
+    if (!res.ok) {
+      return { name: site.name, bio: site.description };
+    }
+
+    const json = (await res.json()) as {
+      name?: string | null;
+      bio?: string | null;
+    };
+
+    return {
+      name: json.name?.trim() || site.name,
+      bio: json.bio?.trim() || site.description,
+    };
+  } catch {
+    return { name: site.name, bio: site.description };
   }
 }

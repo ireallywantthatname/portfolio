@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Marquee } from "@/components/marquee";
 import { NowPlayingCard } from "@/components/now-playing";
+import { getGitHubProfile } from "@/lib/github";
 import { site } from "@/lib/site";
 import {
   btnPrimary,
@@ -12,7 +13,11 @@ import {
   panelSoft,
 } from "@/lib/styles";
 
-export default function HomePage() {
+export const revalidate = 3600;
+
+export default async function HomePage() {
+  const profile = await getGitHubProfile(site.githubUser);
+
   return (
     <div className="flex h-full flex-col bg-background text-foreground">
       <div className={pageWrap}>
@@ -20,10 +25,10 @@ export default function HomePage() {
           <div className="flex flex-col gap-6">
             <div className="space-y-3">
               <h1 className="text-[36px] font-bold leading-[1.08] tracking-tight max-[500px]:text-[24px] md:text-[30px] lg:text-[34px]">
-                {site.name}
+                {profile.name}
               </h1>
               <p className="max-w-[36rem] text-[16px] leading-relaxed tracking-normal text-foreground/90 lg:text-[15px]">
-                {site.description}
+                {profile.bio}
               </p>
             </div>
 

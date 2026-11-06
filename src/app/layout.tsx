@@ -3,27 +3,32 @@ import type { Metadata } from "next";
 import { DitherBackground } from "@/components/dither-background";
 import { SiteShell } from "@/components/site-shell";
 import { ThemeProvider } from "@/components/theme-provider";
+import { getGitHubProfile } from "@/lib/github";
 import { site } from "@/lib/site";
 
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: {
-    default: site.name,
-    template: `%s · ${site.name}`,
-  },
-  description: site.description,
-  openGraph: {
-    title: site.name,
-    description: site.description,
-    type: "website",
-  },
-  twitter: {
-    card: "summary",
-    title: site.name,
-    description: site.description,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const profile = await getGitHubProfile(site.githubUser);
+
+  return {
+    title: {
+      default: profile.name,
+      template: `%s · ${profile.name}`,
+    },
+    description: profile.bio,
+    openGraph: {
+      title: profile.name,
+      description: profile.bio,
+      type: "website",
+    },
+    twitter: {
+      card: "summary",
+      title: profile.name,
+      description: profile.bio,
+    },
+  };
+}
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
