@@ -12,7 +12,26 @@ export const site = {
   mapsEmbed:
     "https://www.google.com/maps?q=6.8213291,80.0415729&z=17&output=embed",
   mapsLink: "https://maps.app.goo.gl/UrJeyPC5aGhLVCeu7",
-  marquee: ["TypeScript", "Linux", "Bun", "Next.js", "Elysia.js", "shadcn"],
+  marquee: [
+    "Python",
+    "C++",
+    "Rust",
+    "Go",
+    "Java",
+    "C",
+    "Bash",
+    "SQL",
+    "PyTorch",
+    "TensorFlow",
+    "Hugging Face Transformers",
+    "ONNX",
+    "MLflow",
+    "LangChain/LlamaIndex",
+    "pgvector",
+    "MySQL",
+    "Qdrant",
+    "SQLite",
+  ],
 } as const;
 
 export const navItems = [
