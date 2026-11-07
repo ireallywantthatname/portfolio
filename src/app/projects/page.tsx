@@ -11,7 +11,13 @@ export default async function ProjectsPage() {
   const { repos, error } = await getPinnedRepos(site.githubUser);
 
   const screenshots = await Promise.all(
-    repos.map((repo) => getScreenshotUrl(repo.homepageUrl ?? repo.url)),
+    repos.map((repo) =>
+      repo.homepageUrl
+        ? getScreenshotUrl(repo.homepageUrl).then(
+            (url) => url ?? repo.readmeImageUrl,
+          )
+        : repo.readmeImageUrl,
+    ),
   );
 
   return (

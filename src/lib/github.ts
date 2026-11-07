@@ -12,6 +12,7 @@ export type PinnedRepo = {
   homepageUrl: string | null;
   stargazerCount: number;
   primaryLanguage: { name: string; color: string | null } | null;
+  readmeImageUrl: string | null;
 };
 
 type GraphQLResponse = {
@@ -26,6 +27,9 @@ type GraphQLResponse = {
               homepageUrl: string | null;
               stargazerCount: number;
               primaryLanguage: { name: string; color: string | null } | null;
+              owner?: { login?: string | null } | null;
+              defaultBranchRef?: { name?: string | null } | null;
+              readme?: { text?: string | null } | null;
             }
           | null
           | Record<string, never>
@@ -51,12 +55,67 @@ const PINNED_QUERY = `
               name
               color
             }
+            owner {
+              login
+            }
+            defaultBranchRef {
+              name
+            }
+            readme: object(expression: "HEAD:README.md") {
+              ... on Blob {
+                text
+              }
+            }
           }
         }
       }
     }
   }
 `;
+
+function extractReadmeImageUrl(
+  readmeText: string | null | undefined,
+  owner: string,
+  repo: string,
+  branch: string,
+): string | null {
+  if (!readmeText) return null;
+
+  const candidates: string[] = [];
+  const mdRegex = /!\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g;
+  for (const match of readmeText.matchAll(mdRegex)) {
+    if (match[1]) candidates.push(match[1]);
+  }
+
+  const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/gi;
+  for (const match of readmeText.matchAll(imgRegex)) {
+    if (match[1]) candidates.push(match[1]);
+  }
+
+  for (const raw of candidates) {
+    const lower = raw.toLowerCase();
+    if (
+      lower.includes("img.shields.io") ||
+      lower.includes("goreportcard.com") ||
+      lower.includes("/badge") ||
+      lower.endsWith("/icon.svg") ||
+      lower.endsWith("/icon.png") ||
+      lower === "icon.svg" ||
+      lower === "icon.png"
+    ) {
+      continue;
+    }
+
+    if (raw.startsWith("http://") || raw.startsWith("https://")) {
+      return raw;
+    }
+
+    const cleanPath = raw.replace(/^\.?\//, "");
+    return `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${cleanPath}`;
+  }
+
+  return null;
+}
 
 export async function getPinnedRepos(
   login: string,
@@ -103,14 +162,24 @@ export async function getPinnedRepos(
       .filter((node): node is NonNullable<typeof node> & { name: string } =>
         Boolean(node && "name" in node && node.name),
       )
-      .map((node) => ({
-        name: node.name,
-        description: node.description ?? null,
-        url: node.url,
-        homepageUrl: node.homepageUrl ?? null,
-        stargazerCount: node.stargazerCount ?? 0,
-        primaryLanguage: node.primaryLanguage ?? null,
-      }));
+      .map((node) => {
+        const owner = node.owner?.login || login;
+        const branch = node.defaultBranchRef?.name || "main";
+        return {
+          name: node.name,
+          description: node.description ?? null,
+          url: node.url,
+          homepageUrl: node.homepageUrl ?? null,
+          stargazerCount: node.stargazerCount ?? 0,
+          primaryLanguage: node.primaryLanguage ?? null,
+          readmeImageUrl: extractReadmeImageUrl(
+            node.readme?.text,
+            owner,
+            node.name,
+            branch,
+          ),
+        };
+      });
 
     return { repos };
   } catch (err) {
