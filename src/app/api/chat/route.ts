@@ -92,7 +92,7 @@ export async function POST(req: Request) {
   const modelMessages = await convertToModelMessages(messages);
 
   const result = streamText({
-    model: groq("qwen/qwen3.6-27b"),
+    model: groq("qwen/qwen3.8-27b"),
     system: buildSystemPrompt(hits),
     messages: modelMessages,
     providerOptions: {

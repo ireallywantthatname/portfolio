@@ -39,7 +39,7 @@ Pages:
 
 - **Now playing** from the Spotify Web API (current track, or last played)
 - **Pinned projects** from GitHub GraphQL, with homepage screenshots from [Microlink](https://microlink.io)
-- **Project chat** that retrieves `CONTEXT.md` chunks and streams answers through Groq (`qwen/qwen3.6-27b`)
+- **Project chat** that retrieves `CONTEXT.md` chunks and streams answers through Groq (`qwen/qwen3.8-27b`)
 - **Webhook reindex** so a push that touches `CONTEXT.md` updates the Convex vector index
 - **Light and dark themes** (DAY / NITE) plus a skip-to-content link
 - **Cloudflare Workers** hosting via OpenNext
