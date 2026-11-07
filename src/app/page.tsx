@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Marquee } from "@/components/marquee";
 import { NowPlayingCard } from "@/components/now-playing";
+import { OpenProjectChatButton } from "@/components/project-chat";
 import { getGitHubProfile } from "@/lib/github";
 import { site } from "@/lib/site";
 import {
@@ -55,7 +56,8 @@ export default async function HomePage() {
             <NowPlayingCard />
 
             <div className="flex flex-wrap gap-3">
-              <Link href="/resume" className={btnPrimary}>
+              <OpenProjectChatButton className={btnPrimary} />
+              <Link href="/resume" className={btnSecondary}>
                 View resume
               </Link>
               <a href={`mailto:${site.email}`} className={btnSecondary}>

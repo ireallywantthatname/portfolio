@@ -261,7 +261,13 @@ export function ProjectChatWindow() {
   );
 }
 
-export function OpenProjectChatButton({ className }: { className?: string }) {
+export function OpenProjectChatButton({
+  className,
+  children = "Ask about projects",
+}: {
+  className?: string;
+  children?: React.ReactNode;
+}) {
   const { openChat, open } = useProjectChat();
   return (
     <button
@@ -270,7 +276,7 @@ export function OpenProjectChatButton({ className }: { className?: string }) {
       className={className}
       aria-pressed={open}
     >
-      Ask about projects
+      {children}
     </button>
   );
 }
